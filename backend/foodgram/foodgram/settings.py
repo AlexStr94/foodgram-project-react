@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv(
     default='x-ys%(uz@io!unn88^vg+8nhbj18+i@vny5jh_n(s8g=#5k@j#'
 )
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = os.getenv(
     'SERVERNAMES',
