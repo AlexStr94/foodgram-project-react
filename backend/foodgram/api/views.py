@@ -224,7 +224,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             '{}: {}\n'.format(key, val) for key, val in shopping_cart.items()
         ]
         file = StringIO(
-            'Список покупок:\n' +
+            'Список покупок:\n ',
             ''.join(shopping_cart)
         )
         return HttpResponse(file, content_type='text/plain')

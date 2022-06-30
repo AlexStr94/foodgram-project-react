@@ -71,7 +71,7 @@ class TestSubscriptionsApi:
             'is_subscribed',
             'recipes',
             'recipes_count'
-            )
+        )
         for field in expected_fields:
             assert field in response_data, (
                 f'Проверьте, что при POST запросе на `{url}`, '

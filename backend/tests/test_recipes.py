@@ -32,7 +32,7 @@ class TestRecipesApi:
             'image',
             'text',
             'cooking_time'
-            )
+        )
         for field in expected_recipe_fields:
             assert field in response_data['results'][0].keys(), (
                 f'Проверьте, что при GET запросе на `{url}`, '
@@ -59,7 +59,7 @@ class TestRecipesApi:
             'image',
             'text',
             'cooking_time'
-            )
+        )
         for field in expected_recipe_fields:
             assert field in response_data.keys(), (
                 f'Проверьте, что при GET запросе на `{url}`, '
