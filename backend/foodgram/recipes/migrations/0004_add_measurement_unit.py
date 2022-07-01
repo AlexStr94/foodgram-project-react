@@ -3,7 +3,7 @@ from pathlib import Path
 
 from django.db import migrations
 
-data_path = Path(__file__).resolve().parents[4] / 'data/ingredients.csv'
+data_path = Path(__file__).resolve().parents[2] / 'ingredients.csv'
 try:
     with open(data_path, encoding='utf-8') as f:
         data = [list(line) for line in csv.reader(f)]
