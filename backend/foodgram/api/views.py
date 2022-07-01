@@ -15,7 +15,7 @@ from recipes.models import (FavoriteRecipe, Ingredient, Recipe, RecipeInCart,
                             Tag)
 from users.models import Subscription, User
 
-from .filters import RecipeFilter
+from .filters import IngredientFilter, RecipeFilter
 from .permissions import RecipePermission
 from .serializers import (FavoriteRecipeSerializer, GetTokenSerializer,
                           IngredientSerializer, RecipeInCartSerializer,
@@ -122,8 +122,8 @@ class IngredientReadOnlyModelViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = (permissions.AllowAny,)
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('name',)
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = IngredientFilter
     pagination_class = None
 
 

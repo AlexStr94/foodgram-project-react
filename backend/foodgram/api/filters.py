@@ -1,6 +1,6 @@
 from django_filters.rest_framework import BooleanFilter, CharFilter, FilterSet
 
-from recipes.models import Recipe
+from recipes.models import Recipe, Ingredient
 
 
 class RecipeFilter(FilterSet):
@@ -25,3 +25,11 @@ class RecipeFilter(FilterSet):
         if value:
             qs = qs.filter(cart__user=self.user)
         return qs
+
+
+class IngredientFilter(FilterSet):
+    name = CharFilter(field_name='name', lookup_expr='icontains')
+
+    class Meta:
+        model = Ingredient
+        fields = ('name',)
