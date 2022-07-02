@@ -2,11 +2,10 @@ from django.db import transaction
 from djoser.conf import settings
 from djoser.serializers import UserCreateSerializer
 from drf_extra_fields.fields import Base64ImageField
-from rest_framework import exceptions, serializers
-from rest_framework.authtoken.models import Token
-
 from recipes.models import (FavoriteRecipe, Ingredient, IngredientInRecipe,
                             MeasurementUnit, Recipe, RecipeInCart, Tag)
+from rest_framework import exceptions, serializers
+from rest_framework.authtoken.models import Token
 from users.models import Subscription, User
 
 

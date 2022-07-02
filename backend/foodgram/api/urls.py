@@ -6,17 +6,21 @@ from .views import (CustomUserViewSet, IngredientReadOnlyModelViewSet,
 
 router_v1 = SimpleRouter()
 router_v1.register(
-    r'tags', TagReadOnlyModelViewSet
+    'tags', TagReadOnlyModelViewSet,
+    basename='tags'
 )
 router_v1.register(
-    r'ingredients', IngredientReadOnlyModelViewSet
+    'ingredients', IngredientReadOnlyModelViewSet,
+    basename='ingredients'
 )
 router_v1.register(
-    r'recipes', RecipeViewSet
+    'recipes', RecipeViewSet,
+    basename='recipes'
 )
 router_v1.register(
-    r'users',
-    CustomUserViewSet
+    'users',
+    CustomUserViewSet,
+    basename='users'
 )
 
 urlpatterns = [

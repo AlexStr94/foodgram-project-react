@@ -166,7 +166,12 @@ class FavoriteRecipe(models.Model):
     class Meta:
         verbose_name = 'Рецепт из избранного'
         verbose_name_plural = 'Избранные рецепты'
-        unique_together = ('user', 'recipe')
+        constraints = (
+            models.UniqueConstraint(
+                fields=('user', 'recipe'),
+                name='one_recipe_favorite'
+            ),
+        )
 
     def __str__(self):
         return f'{self.recipe} в избранном у пользователя {self.user}'
@@ -189,7 +194,12 @@ class RecipeInCart(models.Model):
     class Meta:
         verbose_name = 'Рецепт в корзине'
         verbose_name_plural = 'Рецепты в корзине'
-        unique_together = ('user', 'recipe')
+        constraints = (
+            models.UniqueConstraint(
+                fields=('user', 'recipe'),
+                name='one_recipe_favorite'
+            ),
+        )
 
     def __str__(self):
         return f'{self.recipe} в корзине у пользователя {self.user}'

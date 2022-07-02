@@ -1,5 +1,3 @@
-from io import StringIO
-
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponse
 from django_filters.rest_framework import DjangoFilterBackend
@@ -7,12 +5,11 @@ from djoser import utils
 from djoser.compat import get_user_email
 from djoser.conf import settings
 from djoser.views import UserViewSet
+from recipes.models import (FavoriteRecipe, Ingredient, Recipe, RecipeInCart,
+                            Tag)
 from rest_framework import pagination, permissions, status, viewsets
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
-
-from recipes.models import (FavoriteRecipe, Ingredient, Recipe, RecipeInCart,
-                            Tag)
 from users.models import Subscription, User
 
 from .filters import IngredientFilter, RecipeFilter
@@ -21,6 +18,7 @@ from .serializers import (FavoriteRecipeSerializer, GetTokenSerializer,
                           IngredientSerializer, RecipeInCartSerializer,
                           RecipeSerializer, TagSerializer,
                           UserInSubscriptionSerializer)
+from .utils import create_pdf_shopping_cart
 
 
 @api_view(['POST'])
@@ -212,19 +210,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
     def download_shopping_cart(self, request, *args, **kwargs):
         user = request.user
-        shopping_cart = {}
-        for obj in RecipeInCart.objects.filter(user=user):
-            ingredients = obj.recipe.ingredients.all()
-            for ingredient in ingredients:
-                if shopping_cart.get(ingredient.name):
-                    shopping_cart[ingredient.name] += ingredient.amount
-                else:
-                    shopping_cart[ingredient.name] = ingredient.amount
-        shopping_cart = [
-            '{}: {}\n'.format(key, val) for key, val in shopping_cart.items()
-        ]
-        file = StringIO(
-            'Список покупок:\n ',
-            ''.join(shopping_cart)
-        )
-        return HttpResponse(file, content_type='text/plain')
+        file = create_pdf_shopping_cart(user)
+
+        return HttpResponse(file, content_type='application/pdf')
