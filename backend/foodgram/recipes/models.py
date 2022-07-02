@@ -197,7 +197,7 @@ class RecipeInCart(models.Model):
         constraints = (
             models.UniqueConstraint(
                 fields=('user', 'recipe'),
-                name='one_recipe_favorite'
+                name='one_recipe_cart'
             ),
         )
 
