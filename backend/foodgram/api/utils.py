@@ -15,7 +15,7 @@ def create_pdf_shopping_cart(user):
     style = getSampleStyleSheet()
     style['Normal'].fontName = 'DejaVuSerif'
     style['Heading1'].fontName = 'DejaVuSerif'
-    font = TTFont('DejaVuSerif', './media/fonts/DejaVuSerif.ttf', 'UTF-8')
+    font = TTFont('DejaVuSerif', './fonts/DejaVuSerif.ttf', 'UTF-8')
     pdfmetrics.registerFont(font)
 
     shopping_cart = {}

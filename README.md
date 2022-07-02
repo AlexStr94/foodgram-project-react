@@ -58,6 +58,16 @@ context: ../frontend
 context: ./frontend
 ```
 
+```
+- ../docs/:/usr/share/nginx/html/api/docs/
+```
+
+на:
+
+```
+- ./docs/:/usr/share/nginx/html/api/docs/
+```
+
 Далее необходимо запустить Docker Compose:
 
 ```
