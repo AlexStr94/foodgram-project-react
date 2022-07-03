@@ -150,8 +150,7 @@ class IngredientInRecipeGetSerializer(serializers.ModelSerializer):
 class IngredientInRecipeField(serializers.RelatedField):
     default_error_messages = {
         'required id': ('Поле id является обязательным'),
-        'required amount': ('Поле amount является обязательным'),
-        'min_amount_error': ('Значение поля amount должно быть больше 0')
+        'required amount': ('Поле amount является обязательным')
     }
 
     def get_queryset(self):
@@ -165,8 +164,6 @@ class IngredientInRecipeField(serializers.RelatedField):
             self.fail('required id')
         if data.get('amount') is None:
             self.fail('required amount')
-        if int(data.get('amount')) < 1:
-            self.fail('min_amount_error')
         return data
 
 
@@ -203,6 +200,34 @@ class RecipeSerializer(serializers.ModelSerializer):
             recipe=obj
         ).exists()
         return existing
+
+    def validate_ingredients(self, value):
+        msg = {
+            'ingredient_amount_0': ('Количество ингредиентов '
+                                    'должно быть больше 0'),
+            'one ingredient_for_recipe': ('Нельзя добавлять '
+                                          'один и тот же ингредиент '
+                                          'более одного раза')
+        }
+        ingredients = []
+        errors = []
+        for ingredient in value:
+            id = ingredient['id']
+            if int(ingredient['amount']) == 0:
+                error = {
+                    id: [msg['ingredient_amount_0']]
+                }
+                errors.append(error)
+            if id in ingredients:
+                error = {
+                    id: [msg['one ingredient_for_recipe']]
+                }
+                errors.append(error)
+            ingredients.append(id)
+        if len(errors) > 0:
+            raise serializers.ValidationError(errors)
+
+        return value
 
     def _create_ingr_in_recipe(self, recipe, ingredients):
         for ingredient_data in ingredients:

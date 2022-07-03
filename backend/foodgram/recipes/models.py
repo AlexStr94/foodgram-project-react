@@ -1,5 +1,6 @@
 from colorfield.fields import ColorField
 from django.db import models
+from django.core.validators import MinValueValidator
 from pytils.translit import slugify
 
 from users.models import User
@@ -87,7 +88,10 @@ class IngredientInRecipe(models.Model):
         related_name='recipe_ingredient',
         verbose_name='Ингредиент'
     )
-    amount = models.IntegerField('Кол-во')
+    amount = models.IntegerField(
+        'Кол-во',
+        validators=(MinValueValidator(1),)
+    )
 
     class Meta:
         verbose_name = 'Ингредиент из рецепта'
@@ -132,7 +136,8 @@ class Recipe(models.Model):
     )
     cooking_time = models.IntegerField(
         'Время приготовления',
-        help_text='Необходимо указывать в минутах'
+        help_text='Необходимо указывать в минутах',
+        validators=(MinValueValidator(1),)
     )
 
     class Meta:
