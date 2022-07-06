@@ -83,8 +83,3 @@ docker-compose exec <id контейнера с Django> python manage.py collect
 ```
 
 После установки документация API доступна по адресу: /api/docs/
-
-HOST: 130.193.55.238
-Admin: 
--Username: admin
--Password: admin
